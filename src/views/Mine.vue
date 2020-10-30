@@ -1,14 +1,8 @@
 <!--  -->
 <template>
-<div id="app">
-    <router-view class="content" />
-    <van-tabbar v-model="active" route :fixed="false">
-  <van-tabbar-item icon="home-o" to="/">首页</van-tabbar-item>
-  <van-tabbar-item icon="search" to="/sort">分类</van-tabbar-item>
-  <van-tabbar-item icon="friends-o" badge="5" to="/movie">影库</van-tabbar-item>
-  <van-tabbar-item icon="manager-o" to="/mine">我的</van-tabbar-item>
-</van-tabbar>
-  </div>
+<div class='mine'>
+我的
+</div>
 </template>
 
 <script>
@@ -17,11 +11,12 @@
 
 export default {
 //import引入的组件需要注入到对象中才能使用
+name:"Mine",
 components: {},
 data() {
 //这里存放数据
 return {
-  active: 0,
+
 };
 },
 //监听属性 类似于data概念
@@ -49,22 +44,7 @@ destroyed() {}, //生命周期 - 销毁完成
 activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 }
 </script>
-<style >
-html,
-body,
-#app {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-#app {
-  display: flex;
-  flex-direction: column;
-}
-.content {
-  flex: 1;
-  overflow: auto;
-}
+<style  scoped>
+
 
 </style>
