@@ -7,7 +7,6 @@ import { isLogined } from "../untils/tools";
 Vue.use(VueRouter)
 
 const routes = [{
-<<<<<<< HEAD
     path: '/',
     name: 'Home',
     component: Home
@@ -25,12 +24,18 @@ const routes = [{
         import('../views/Movie.vue')
 },
 {
+    path: '/detail',
+    name: 'Detail',
+    component: () =>
+        import('../views/Detail.vue')
+},
+{
     path: '/mine',
     name: 'Mine',
     component: () =>
         import('../views/Mine.vue'),
     meta: {
-        needLogin: true
+        needLogin: true,
     }
 },
 {
@@ -40,53 +45,17 @@ const routes = [{
         import('../views/List.vue')
 },
 {
-    path: '/login',
-    name: 'Login',
-    component: () =>
-        import('../views/Login.vue')
-},
-{
     path: '/reg',
     name: 'Reg',
     component: () =>
         import('../views/Reg.vue')
 },
-=======
-        path: '/',
-        name: 'Home',
-        component: Home
-    },
-    {
-        path: '/sort',
-        name: 'Sort',
-        component: () =>
-            import ('../views/Sort.vue')
-    },
-    {
-        path: '/movie',
-        name: 'Movie',
-        component: () =>
-            import ('../views/Movie.vue')
-    },
-    {
-        path: '/detail',
-        name: 'Detail',
-        component: () =>
-            import ('../views/Detail.vue')
-    },
-    {
-        path: '/mine',
-        name: 'Mine',
-        component: () =>
-            import ('../views/Mine.vue')
-    },
-    {
-        path: '/list',
-        name: 'List',
-        component: () =>
-            import ('../views/List.vue')
-    },
->>>>>>> 717512e1341429459f5b786c1878c2dd1496684a
+{
+    path: '/login',
+    name: 'Login',
+    component: () =>
+        import('../views/Login.vue')
+},
 ]
 
 const router = new VueRouter({

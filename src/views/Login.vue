@@ -45,6 +45,7 @@
 import { Notify } from "vant";
 import { loginApi } from "../untils/auth";
 export default {
+  name:"Login",
   data() {
     return {
       username: "",
