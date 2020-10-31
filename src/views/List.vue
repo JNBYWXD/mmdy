@@ -8,6 +8,7 @@
   :desc="item.focus"
   :title="item.title"
   :thumb="item.imageUrl"
+  :thumb-link="'/#/detail?id=' + item._id"
 />
 </div>
 </template>
