@@ -71,7 +71,7 @@ methods: {
     })
     },
      six(){
-      axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=1&data_type=1&mode=24&page_id=1&ret_num=48").then((res)=>{
+      axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=4&data_type=1&mode=24&page_id=1&ret_num=48").then((res)=>{
       console.log(res.data.data.list)
       this.list=res.data.data.list
       console.log(this.list)    

@@ -1,13 +1,5 @@
 <template>
-  <h1>这是详情页</h1>
+  <div class="detail">
+    <h1>详情页</h1>
+  </div>
 </template>
-
-<script>
-export default {
-
-}
-</script>
-
-<style>
-
-</style>
