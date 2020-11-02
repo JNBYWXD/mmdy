@@ -5,7 +5,7 @@
     <van-tabbar v-model="active" route :fixed="false">
   <van-tabbar-item icon="home-o" to="/">首页</van-tabbar-item>
   <van-tabbar-item icon="search" to="/sort">分类</van-tabbar-item>
-  <van-tabbar-item icon="friends-o" badge="5" to="/movie">影库</van-tabbar-item>
+  <van-tabbar-item icon="friends-o"  to="/movie">影库</van-tabbar-item>
   <van-tabbar-item icon="manager-o" to="/mine">我的</van-tabbar-item>
 </van-tabbar>
   </div>

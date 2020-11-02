@@ -1,15 +1,46 @@
 <!--  -->
 <template>
 <div class='list'>
+<van-nav-bar
+  :title="name"
+  left-text="返回"
+  left-arrow
+  @click-left="onClickLeft"
+/>
+
+
+<div class="ten">
+<input type="text" class="txt" placeholder="请输入电影名" v-model="txt"/>
+</div>
+
+
+<!-- <div class="top">
+<van-icon name="arrow-left" @click="go" />
 <h3>{{name}}</h3>
-<van-card v-for="item in list"
-:key="item.albumId"
-  price="39.00"
-  :desc="item.focus"
+ :desc="item.focus"
   :title="item.title"
   :thumb="item.imageUrl"
+</div> -->
+
+<van-list
+  v-model="loading"
+  :finished="finished"
+  finished-text="没有更多了"
+  @load="onLoad"
+>
+
+ <van-card 
+  v-for="item in list"
+:key="item._id"
+  price="39.00"
+  :desc="item.descriptions"
+  :title="item.name"
+  :thumb="item.coverImg"
   :thumb-link="'/#/detail?id=' + item._id"
 />
+
+ 
+</van-list>
 </div>
 </template>
 
@@ -26,66 +57,164 @@ data() {
 return {
 index:"",
 name:"",
-list:[]
+txt:'',
+unm:10,
+list:[],
+loading: false,
+finished: false,
 };
 },
 //监听属性 类似于data概念
-computed: {},
+computed: { 
+   flt(){
+     console.log("a")
+       return this.list.filter((item)=>
+         item.name.indexOf(this.txt)>-1
+       )
+     }
+},
 //监控data中的数据变化
 watch: {},
 //方法集合
 methods: {
+ /*  aaa(){
+    console.log("A")
+  }, */
     wan(){
-      axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=1&data_type=1&mode=11&page_id=1&ret_num=48").then((res)=>{
-      console.log(res.data.data.list)
-      this.list=res.data.data.list
-      console.log(this.list)  
+      axios.get("http://localhost:3009/api/v1/products?page="+this.index*10+"&per="+this.unm).then((res)=>{
+      //console.log(res.data.products)
+      this.list=res.data.products
+      //console.log(this.list)  
     })
     },
-     tu(){
-      axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=4&data_type=1&mode=24&page_id=1&ret_num=48").then((res)=>{
+     /* tu(){
+      axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=4&data_type=1&mode=24&page_id=1&ret_num="+this.unm).then((res)=>{
       console.log(res.data.data.list)
       this.list=res.data.data.list
       console.log(this.list)    
     })
     },
      three(){
-      axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=3&data_type=1&mode=24&page_id=1&ret_num=48").then((res)=>{
+      axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=3&data_type=1&mode=24&page_id=1&ret_num="+this.unm).then((res)=>{
       console.log(res.data.data.list)
       this.list=res.data.data.list
       console.log(this.list)    
     })
     },
      four(){
-      axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=8&data_type=1&mode=24&page_id=1&ret_num=48").then((res)=>{
+      axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=8&data_type=1&mode=24&page_id=1&ret_num="+this.unm).then((res)=>{
       console.log(res.data.data.list)
       this.list=res.data.data.list
       console.log(this.list)    
     })
     },
      five(){
-      axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=6&data_type=1&mode=24&page_id=1&ret_num=48").then((res)=>{
+      axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=6&data_type=1&mode=24&page_id=1&ret_num="+this.unm).then((res)=>{
       console.log(res.data.data.list)
       this.list=res.data.data.list
       console.log(this.list)    
     })
     },
      six(){
-      axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=1&data_type=1&mode=24&page_id=1&ret_num=48").then((res)=>{
-      console.log(res.data.data.list)
+      axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=1&data_type=1&mode=24&page_id=1&ret_num="+this.unm).then((res)=>{
       this.list=res.data.data.list
       console.log(this.list)    
     })
+    }, */
+    onClickLeft(){
+        window.history.go(-1)
     },
+     /* onLoad() {
+      // 异步更新数据
+      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
+      setTimeout(() => {
+          console.log(1)
+      this.unm+=40
+        this.six()
 
-},
+        // 加载状态结束
+        this.loading = false;
+
+        // 数据全部加载完成
+        if (this.list.length >= 400) {
+          this.finished = true;
+        }
+      }, 2000);
+     }, */
+      onLoad() {
+      // 异步更新数据
+      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
+     
+          setTimeout(() => {
+        this.unm+=10
+        this.wan()
+      /*  if(this.index==0){
+        this.wan()
+        this.list.forEach((item,i)=>{
+          //this.ha(i);
+     
+   })
+    } */
+     
+    /*  if(this.index==1){
+        this.tu()
+    }
+     if(this.index==2){
+        this.three()
+    }
+     if(this.index==3){
+        this.four()
+    }
+     if(this.index==4){
+        this.five()
+    }
+     if(this.index==5){
+        this.six()
+        console.log(1)
+    } */
+
+        // 加载状态结束
+        this.loading = false;
+
+        // 数据全部加载完成
+        if (this.list.length >= 90) {
+          this.finished = true;
+        }
+      }, 2000);
+      
+      
+    },
+     ha(i){
+        axios.post("http://localhost:3009/api/v1/admin/products",{
+    "quantity": 11,
+    "price": 39,
+    // "_id": this.list[i].albumId,
+    "name": this.list[i].name,
+    "descriptions": this.list[i].description,
+    "coverImg": this.list[i].imageUrl,
+    //"createdAt": this.name,
+    //"updatedAt": this.name,
+   // "__v": 0
+        }).then((res)=>{
+            console.log(res)
+        })
+    }
+    
+     /* for(let i=0,i<lthis.ist.length,i++){
+
+     } */,
+
+  },
+
 //生命周期 - 创建完成（可以访问当前this实例）
 created() {
     this.index=this.$route.query.id
     this.name=this.$route.query.name
-    console.log(this.index,this.name)
-    if(this.index==0){
+    //console.log(this.index,this.name)
+    this.wan()
+    /* if(this.index==0){
         this.wan()
+        //console.log("aaaa")
     }
      if(this.index==1){
         this.tu()
@@ -101,7 +230,9 @@ created() {
     }
      if(this.index==5){
         this.six()
+        console.log(1)
     }
+   */
 },
 //生命周期 - 挂载完成（可以访问DOM元素）
 mounted() {
@@ -117,9 +248,42 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 }
 </script>
 <style  scoped>
-h3{
-    text-align: center;
-    color: red;
+.list{
+    padding-top: 96px;
 }
+.top{
+    display: flex;
+    align-items: center;
+}
+h3{
+    color: red;
+    width: 56%;
+}
+.van-icon{
+    flex: 1;
+    font-size: 30px;
 
+}
+.van-nav-bar{
+    width: 100%;
+    position: fixed;
+    top: 0;
+}
+.ten{
+   position: fixed;
+  top: 46px;
+  width: 100%;
+  height: 50px;
+  z-index: 10;
+  background: ghostwhite;
+}
+.txt{
+  border-radius: 20px;
+  width: 90%;
+  height: 30px;
+  padding-left: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+  z-index: 100;
+}
 </style>

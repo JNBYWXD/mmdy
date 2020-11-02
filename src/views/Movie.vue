@@ -25,7 +25,7 @@ computed: {},
 watch: {},
 //方法集合
 methods: {
-
+   
 },
 //生命周期 - 创建完成（可以访问当前this实例）
 created() {
