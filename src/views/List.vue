@@ -7,9 +7,19 @@
   left-arrow
   @click-left="onClickLeft"
 />
+
+
+<div class="ten">
+<input type="text" class="txt" placeholder="请输入电影名" v-model="txt"/>
+</div>
+
+
 <!-- <div class="top">
 <van-icon name="arrow-left" @click="go" />
 <h3>{{name}}</h3>
+ :desc="item.focus"
+  :title="item.title"
+  :thumb="item.imageUrl"
 </div> -->
 
 <van-list
@@ -18,14 +28,18 @@
   finished-text="没有更多了"
   @load="onLoad"
 >
-  <van-card v-for="item in list"
-:key="item.albumId"
+
+ <van-card 
+  v-for="item in list"
+:key="item._id"
   price="39.00"
-  :desc="item.focus"
-  :title="item.title"
-  :thumb="item.imageUrl"
+  :desc="item.descriptions"
+  :title="item.name"
+  :thumb="item.coverImg"
   :thumb-link="'/#/detail?id=' + item._id"
 />
+
+ 
 </van-list>
 </div>
 </template>
@@ -43,26 +57,37 @@ data() {
 return {
 index:"",
 name:"",
-unm:20,
+txt:'',
+unm:10,
 list:[],
 loading: false,
 finished: false,
 };
 },
 //监听属性 类似于data概念
-computed: {},
+computed: { 
+   flt(){
+     console.log("a")
+       return this.list.filter((item)=>
+         item.name.indexOf(this.txt)>-1
+       )
+     }
+},
 //监控data中的数据变化
 watch: {},
 //方法集合
 methods: {
+ /*  aaa(){
+    console.log("A")
+  }, */
     wan(){
-      axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=1&data_type=1&mode=11&page_id=1&ret_num="+this.unm).then((res)=>{
-      console.log(res.data.data.list)
-      this.list=res.data.data.list
-      console.log(this.list)  
+      axios.get("http://localhost:3009/api/v1/products?page="+this.index*10+"&per="+this.unm).then((res)=>{
+      //console.log(res.data.products)
+      this.list=res.data.products
+      //console.log(this.list)  
     })
     },
-     tu(){
+     /* tu(){
       axios.get("https://pcw-api.iqiyi.com/search/recommend/list?channel_id=4&data_type=1&mode=24&page_id=1&ret_num="+this.unm).then((res)=>{
       console.log(res.data.data.list)
       this.list=res.data.data.list
@@ -95,7 +120,7 @@ methods: {
       this.list=res.data.data.list
       console.log(this.list)    
     })
-    },
+    }, */
     onClickLeft(){
         window.history.go(-1)
     },
@@ -121,15 +146,17 @@ methods: {
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
      
           setTimeout(() => {
-        this.unm+=20
-       if(this.index==0){
+        this.unm+=10
         this.wan()
-        /* this.list.forEach((item,i)=>{
+      /*  if(this.index==0){
+        this.wan()
+        this.list.forEach((item,i)=>{
           //this.ha(i);
      
-   }) */
-    }
-     if(this.index==1){
+   })
+    } */
+     
+    /*  if(this.index==1){
         this.tu()
     }
      if(this.index==2){
@@ -144,16 +171,16 @@ methods: {
      if(this.index==5){
         this.six()
         console.log(1)
-    }
+    } */
 
         // 加载状态结束
         this.loading = false;
 
         // 数据全部加载完成
-        if (this.list.length >= 400) {
+        if (this.list.length >= 90) {
           this.finished = true;
         }
-      }, 1000);
+      }, 2000);
       
       
     },
@@ -175,17 +202,19 @@ methods: {
     
      /* for(let i=0,i<lthis.ist.length,i++){
 
-     } */
+     } */,
+
   },
 
 //生命周期 - 创建完成（可以访问当前this实例）
 created() {
     this.index=this.$route.query.id
     this.name=this.$route.query.name
-    console.log(this.index,this.name)
-    if(this.index==0){
+    //console.log(this.index,this.name)
+    this.wan()
+    /* if(this.index==0){
         this.wan()
-        console.log("aaaa")
+        //console.log("aaaa")
     }
      if(this.index==1){
         this.tu()
@@ -203,7 +232,7 @@ created() {
         this.six()
         console.log(1)
     }
-  
+   */
 },
 //生命周期 - 挂载完成（可以访问DOM元素）
 mounted() {
@@ -220,7 +249,7 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 </script>
 <style  scoped>
 .list{
-    padding-top: 46px;
+    padding-top: 96px;
 }
 .top{
     display: flex;
@@ -239,5 +268,22 @@ h3{
     width: 100%;
     position: fixed;
     top: 0;
+}
+.ten{
+   position: fixed;
+  top: 46px;
+  width: 100%;
+  height: 50px;
+  z-index: 10;
+  background: ghostwhite;
+}
+.txt{
+  border-radius: 20px;
+  width: 90%;
+  height: 30px;
+  padding-left: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+  z-index: 100;
 }
 </style>
