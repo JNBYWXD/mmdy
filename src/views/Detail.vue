@@ -12,7 +12,8 @@
 <img :src="item.coverImg" alt="">
 <div class="cent">
 <span>{{item.name}}</span>
-<van-icon name="star-o" @click="Colors"  ref="red"/>
+<van-icon name="star-o" @click="showPopup"  ref="red"/>
+
 </div>
 <div >&nbsp;&nbsp;&nbsp;{{item.descriptions}}</div>
 </div>
@@ -23,6 +24,7 @@
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 import axios from "axios"
+import { Toast } from 'vant'
 export default {
 //import引入的组件需要注入到对象中才能使用
 components: {},
@@ -32,8 +34,6 @@ return {
   list:[],
   name:'',
   id:'',
-  classes: [],
-  fas:false
 };
 },
 //监听属性 类似于data概念
@@ -42,8 +42,11 @@ computed: {},
 watch: {},
 //方法集合
 methods: {
+  showPopup() {
+     Toast.success('添加成功');
+    },
   dataList(){
-    axios.get("http://localhost:3009/api/v1/products/"+this.id).then((res)=>{
+    axios.get("http://192.168.11.13:3009/api/v1/products/"+this.id).then((res)=>{
       this.list.push(res.data)
       console.log(this.list)
     })
@@ -101,5 +104,20 @@ img{
 }
 div{
   color: green;
+}
+.van-nav-bar{
+    width: 100%;
+    position: fixed;
+    top: 0;
+}
+.deta{
+  padding-top: 46px;
+}
+.van-popup{
+  font-size: 20px;
+  font-weight: bold;
+  color: red;
+  text-align: center;
+  line-height: 200px;
 }
 </style>
