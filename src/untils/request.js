@@ -61,10 +61,7 @@ instance.interceptors.response.use(
 // }
 export const get = (url, params) => instance.get(url, { params });
 export function post(url,data){
-    //参数一表示请求地址
-    //参数二表示配置顶
     return instance.post(url,
         data,//params:params
-        // {data}
     )
 }

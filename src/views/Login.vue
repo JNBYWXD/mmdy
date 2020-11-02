@@ -1,12 +1,7 @@
 <template>
   <div class="login">
     <div class="img">
-      <van-image
-        round
-        width="100"
-        height="100"
-        src="https://img.yzcdn.cn/vant/cat.jpeg"
-      />
+      <van-image round width="6rem" height="6rem" :src="picture" />
     </div>
     <van-form @submit="onSubmit">
       <van-field
@@ -42,14 +37,16 @@
 </template>
 
 <script>
+import { get } from "../untils/request";
 import { Notify } from "vant";
 import { loginApi } from "../untils/auth";
 export default {
-  name:"Login",
+  name: "Login",
   data() {
     return {
       username: "",
       password: "",
+      picture: "",
     };
   },
   methods: {
@@ -59,10 +56,10 @@ export default {
         userName: this.username,
         password: this.password,
       });
-      console.log(result)
+      console.log(result);
       if (result.code === "success") {
-        console.log(result.code)
-        localStorage.getItem("token",result.token);
+        console.log(result.code);
+        localStorage.getItem("token", result.token);
         this.$router.push({
           name: "Mine",
         });
@@ -73,6 +70,13 @@ export default {
         });
       }
     },
+  },
+  created() {
+    get("/api/v1/users/info").then((res) => {
+      console.log(res);
+      this.picture = "http://localhost:3009" + res.avatar;
+      console.log(this.picture);
+    });
   },
 };
 </script>
