@@ -6,7 +6,7 @@
     <img :src="image" />
   </van-swipe-item>
 </van-swipe>
-<h3>最新1</h3>
+<h3>最新</h3>
 <h2>{{option1.value}}</h2>
 <van-dropdown-menu>
   <van-dropdown-item v-model="value1"  :options="option1" @change="aaa" />

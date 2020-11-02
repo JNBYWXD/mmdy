@@ -24,6 +24,7 @@
   :desc="item.focus"
   :title="item.title"
   :thumb="item.imageUrl"
+  :thumb-link="'/#/detail?id=' + item._id"
 />
 </van-list>
 </div>
@@ -123,6 +124,10 @@ methods: {
         this.unm+=20
        if(this.index==0){
         this.wan()
+        /* this.list.forEach((item,i)=>{
+          //this.ha(i);
+     
+   }) */
     }
      if(this.index==1){
         this.tu()
@@ -152,6 +157,25 @@ methods: {
       
       
     },
+     ha(i){
+        axios.post("http://localhost:3009/api/v1/admin/products",{
+    "quantity": 11,
+    "price": 39,
+    // "_id": this.list[i].albumId,
+    "name": this.list[i].name,
+    "descriptions": this.list[i].description,
+    "coverImg": this.list[i].imageUrl,
+    //"createdAt": this.name,
+    //"updatedAt": this.name,
+   // "__v": 0
+        }).then((res)=>{
+            console.log(res)
+        })
+    }
+    
+     /* for(let i=0,i<lthis.ist.length,i++){
+
+     } */
   },
 
 //生命周期 - 创建完成（可以访问当前this实例）
@@ -161,6 +185,7 @@ created() {
     console.log(this.index,this.name)
     if(this.index==0){
         this.wan()
+        console.log("aaaa")
     }
      if(this.index==1){
         this.tu()
@@ -178,6 +203,7 @@ created() {
         this.six()
         console.log(1)
     }
+  
 },
 //生命周期 - 挂载完成（可以访问DOM元素）
 mounted() {
